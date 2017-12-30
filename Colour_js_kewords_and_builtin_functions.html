@@ -1,0 +1,106 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div>
+	<span>current :<span id="now"></span></span><br>
+	<span>Selected Position:<span id="spos"></span></span><br>
+	<span>Selected :<span id="sel"></span></span><br>
+	<span>Position :<span id="pos"></span></span>
+</div>
+<p contenteditable="true" id="ide" style="border:1px solid red;" >Status: Function</p>
+</body>
+<script>
+
+function setEndOfContenteditable(contentEditableElement)
+{
+    var range,selection;
+    if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+    {
+        range = document.createRange();//Create a range (a range is a like the selection but invisible)
+        range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        selection = window.getSelection();//get the selection object (allows you to change selection)
+        selection.removeAllRanges();//remove any selections already made
+        selection.addRange(range);//make the range you have just created the visible selection
+    }
+    else if(document.selection)//IE 8 and lower
+    { 
+        range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+        range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        range.select();//Select the range (make it the visible selection
+    }
+}
+
+var x = `<div>
+              <{c.race}>
+              <span>
+                <{a.nepal}>
+              </span>
+              <{k.lmama}>
+          </div>`;
+
+call(x.replace(/\s/g, ''))
+
+function call(x){
+     p = 0;
+   for(var i = p ; i< x.length; i++){
+      x = x.substr(p,x.length - p);
+      f1 = x.indexOf('}>');
+      f2 = x.indexOf('<{');
+      if(f1 == -1 || f2 == -1){
+        break;
+      }
+      c = x.substr(f2+1,f1-f2);
+      //console.log(c)
+       var p = f2+(c.length+2);
+   }
+}
+
+$(document).ready(function(){
+    $("#ide").bind('input',function(){
+       var x = $(this).text();
+        //find(x)
+        color(x)
+        setEndOfContenteditable(this);
+    });
+});
+
+
+function color(c ){
+	var str = c; 
+    var res = str.replace(/function|house|car/gi, function myFunction(x){
+    	return '<span style="color:red;">'+x+'</span>';});
+    document.getElementById("ide").innerHTML = res;
+}
+function find(x){
+	var curPos = x.length;
+    var tag = document.createElement("div");
+    tag.innerHTML = x
+      v = tag;  
+    var t = v.getElementsByTagName("*");
+    see = ['div','span','input','button','p','audio','video','p'];
+     for (var i = 0, max = t.length; i < max; i++) {
+     	var z = t[i];
+        var lo = z.tagName.toLowerCase();
+        console.log()
+        if(lo !== undefined){
+
+
+                 res = x.replace(lo,z.outerHTML);
+             	 $("#ide").text(res);
+                // console.log(z.outerHTML)
+                $('#sel').text(lo)
+                console.log(res)
+          
+        }
+        
+              
+    }
+    $('#pos').text(curPos)
+}
+
+</script>
+</html>
