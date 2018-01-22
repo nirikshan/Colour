@@ -3,16 +3,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<div>
-	<span>current :<span id="now"></span></span><br>
-	<span>Selected Position:<span id="spos"></span></span><br>
-	<span>Selected :<span id="sel"></span></span><br>
-	<span>Position :<span id="pos"></span></span>
-</div>
-<p contenteditable="true" id="ide" style="border:1px solid red;" >Status: Function</p>
+<p contenteditable="true" id="ide" style="border:1px solid red;" >...</p>
 </body>
 <script>
-
 function setEndOfContenteditable(contentEditableElement)
 {
     var range,selection;
@@ -33,7 +26,6 @@ function setEndOfContenteditable(contentEditableElement)
         range.select();
     }
 }
-
 $(document).ready(function(){
     $("#ide").bind('input',function(){
        var x = $(this).text();
@@ -41,15 +33,11 @@ $(document).ready(function(){
         setEndOfContenteditable(this);
     });
 });
-
-
 function color(c){
 	var str = c; 
-    var res = str.replace(/function|house|car/gi, function myFunction(x){
+    var res = str.replace(/hello|house|car|happy/gi, function myFunction(x){
     	return '<span style="color:red;">'+x+'</span>';});
     document.getElementById("ide").innerHTML = res;
 }
-
-
 </script>
 </html>
